@@ -1,0 +1,6 @@
+table_add slice_forwarding forward_slicing 169.254.21.222 169.254.18.165 => 2 a0:ce:c8:1d:04:40
+table_add slice_forwarding forward_slicing 169.254.21.223 169.254.18.165 => 2 a0:ce:c8:1d:04:40
+
+//feedback route
+table_add slice_forwarding forward_slicing 169.254.18.165 169.254.21.222 => 0 a0:ce:c8:1d:04:6a
+table_add slice_forwarding forward_slicing 169.254.18.165 169.254.21.223 => 1 a0:ce:c8:1d:40:1c

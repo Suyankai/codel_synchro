@@ -1,0 +1,12 @@
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 169.254.21.222/32 => a0:ce:c8:1d:04:6a 0 
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 169.254.21.223/32 => a0:ce:c8:1d:40:1c 1 
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 169.254.18.165/32 => a0:ce:c8:1d:04:40 2
+
+set_queue_rate 500 1             		//in pps
+set_queue_depth 10000 1           		//in nb_pkts
+
+set_queue_rate 500 2             		//in pps
+set_queue_depth 10000 2           		//in nb_pkts
+
+set_queue_rate 500 3             		//in pps
+set_queue_depth 10000 3           		//in nb_pkts

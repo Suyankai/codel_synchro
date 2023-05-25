@@ -1,0 +1,52 @@
+------------------------------------------------------------
+Client connecting to 169.254.18.165, UDP port 5010 with pid 1322 (1 flows)
+Write buffer size: 1.44 KByte
+UDP buffer size:  176 KByte (default)
+------------------------------------------------------------
+[  3] local 169.254.21.223%eth1 port 33713 connected with 169.254.18.165 port 5010
+[ ID] Interval            Transfer     Bandwidth      Write/Err  PPS
+[  3] 0.0000-0.5000 sec   257 KBytes  4.21 Mbits/sec  180/0      361 pps
+[  3] 0.5000-1.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 1.0000-1.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 1.5000-2.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 2.0000-2.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 2.5000-3.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 3.0000-3.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 3.5000-4.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 4.0000-4.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 4.5000-5.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 5.0000-5.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 5.5000-6.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 6.0000-6.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 6.5000-7.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 7.0000-7.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 7.5000-8.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 8.0000-8.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 8.5000-9.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 9.0000-9.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 9.5000-10.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 10.0000-10.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 10.5000-11.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 11.0000-11.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 11.5000-12.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 12.0000-12.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 12.5000-13.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 13.0000-13.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 13.5000-14.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 14.0000-14.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 14.5000-15.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 15.0000-15.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 15.5000-16.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 16.0000-16.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 16.5000-17.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 17.0000-17.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 17.5000-18.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 18.0000-18.5000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 18.5000-19.0000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 19.0000-19.5000 sec   256 KBytes  4.19 Mbits/sec  178/0      357 pps
+[  3] 19.5000-20.0000 sec   257 KBytes  4.21 Mbits/sec  179/0      357 pps
+[  3] 0.0000-20.0053 sec  10.0 MBytes  4.19 Mbits/sec  7138/0      357 pps
+[  3] Sent 0 datagrams
+[  3] Server Report:
+[ ID] Interval       Transfer     Bandwidth        Jitter   Lost/Total Datagrams
+[  3] 0.0000-20.3072 sec  7.36 MBytes  3.04 Mbits/sec   3.833 ms 1890/ 7138 (26%)
