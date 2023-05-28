@@ -1,4 +1,6 @@
 import subprocess
+import time
+import datetime
 
 def run_command(command):
     process = subprocess.Popen(
@@ -16,6 +18,15 @@ def run_command(command):
     return_code = process.wait()
     return return_code
 
-# Example usage
-#str = "ssh pih1@10.42.0.5" + 
-run_command("ssh pih1@10.42.0.5 iperf -c 10.42.0.1 -u -b 2M -t 3 -i 1")
+if __name__ == "__main__":
+    # Example usage
+    #str = "ssh pih1@10.42.0.5" + 
+    #run_command("ssh pih1@10.42.0.5 iperf -c 10.42.0.1 -u -b 2M -t 3 -i 1")
+    # recursive test
+    print(datetime.datetime.now(), "Iperf start")
+    for i in range(4):
+        print("Round: ", i+1, "/4")
+        run_command("iperf -c 10.42.0.5 -u -b 1M -t 1 -i 0.5")
+        time.sleep(4)
+    
+    print(datetime.datetime.now(), "Iperf stop")
