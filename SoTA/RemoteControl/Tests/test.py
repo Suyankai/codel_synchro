@@ -19,10 +19,6 @@ def run_command(command):
     return return_code
 
 if __name__ == "__main__":
-    # Example usage
-    #str = "ssh pih1@10.42.0.5" + 
-    #run_command("ssh pih1@10.42.0.5 iperf -c 10.42.0.1 -u -b 2M -t 3 -i 1")
-    # recursive test
     print(datetime.datetime.now(), "Iperf start")
     for i in range(4):
         print("Round: ", i+1, "/4")
