@@ -41,8 +41,8 @@ if __name__ == "__main__":
     client_cmds.append(pih2)  
     #client_cmds.append(pi2) 
 
-    pi4_pih1 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5001 -i 0.5 -P 4 > DA/SoTA/{mode}/log_h1_s_synchro_{naming}.txt'" 
-    pi4_pih2 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5010 -i 0.5 -P 1 > DA/SoTA/{mode}/log_h2_s_synchro_{naming}.txt'" 
+    pi4_pih1 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5001 -i 0.5 -P 4 > DA/SoTA/{mode}/log_h1_s_synchro_{mode}_{naming}.txt'" 
+    pi4_pih2 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5010 -i 0.5 -P 1 > DA/SoTA/{mode}/log_h2_s_synchro_{mode}_{naming}.txt'" 
     #pi4_pi2  = "ssh pi4@10.42.0.2 'iperf -s -u -e -p 5020 -i 0.5 -P 1 > DA/SoTA/Codelpp/log_h3_s_synchro_testtttt.txt'" 
     server_cmds.append(pi4_pih1)
     server_cmds.append(pi4_pih2)
