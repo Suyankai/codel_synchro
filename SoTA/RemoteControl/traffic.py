@@ -36,17 +36,17 @@ if __name__ == "__main__":
 
     pih1 = "ssh pih1@10.42.0.5 'iperf -c 169.254.18.165 -u -p 5001 -b 1M -t 1 -i 0.5'"  
     pih2 = "ssh pih2@10.42.0.6 'iperf -c 169.254.18.165 -u -p 5010 -b 3m,2m -t 25 -i 0.5'" 
-    #pi2  = "ssh pi2@10.42.0.3  'iperf -c 169.254.18.165 -u -p 5020 -b 3M -t 20 -i 0.5'" 
+    pi2  = f"ssh pi2@10.42.0.3  'iperf -c 169.254.18.165 -p 5020 -b 1M -t 25 -i 0.5 -e > DA/SoTA/{mode}/log_h3_c_tcp_synchro_{mode}_{naming}.txt' " 
     client_cmds.append(pih1)
     client_cmds.append(pih2)  
-    #client_cmds.append(pi2) 
+    client_cmds.append(pi2) 
 
     pi4_pih1 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5001 -i 0.5 -P 4 > DA/SoTA/{mode}/log_h1_s_synchro_{mode}_{naming}.txt'" 
     pi4_pih2 = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5010 -i 0.5 -P 1 > DA/SoTA/{mode}/log_h2_s_synchro_{mode}_{naming}.txt'" 
-    #pi4_pi2  = "ssh pi4@10.42.0.2 'iperf -s -u -e -p 5020 -i 0.5 -P 1 > DA/SoTA/Codelpp/log_h3_s_synchro_testtttt.txt'" 
+    pi4_pi2  = f"ssh pi4@10.42.0.2 'iperf -s -u -e -p 5020 -i 0.5 -P 1 > DA/SoTA/{mode}/log_h3_s_tcp_synchro_{mode}_{naming}.txt'" 
     server_cmds.append(pi4_pih1)
     server_cmds.append(pi4_pih2)
-    #server_cmds.append(pi4_pi2)
+    server_cmds.append(pi4_pi2)
 
     for server_cmd in server_cmds:
         Popen(server_cmd, shell=True)

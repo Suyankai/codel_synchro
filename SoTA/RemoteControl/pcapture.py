@@ -7,11 +7,6 @@ import subprocess
 from subprocess import Popen
 import argparse
 
-# def run_command(command):
-#     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
-#     output, error = process.communicate()
-#     return output.decode().strip()
-
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
