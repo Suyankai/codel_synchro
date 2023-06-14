@@ -30,3 +30,10 @@ if __name__ == "__main__":
                 +" sudo arp -s 169.254.21.223 a0:ce:c8:1d:40:1c;" 
                 +" sudo ip route add dev eth1 169.254.21.224;"  
                 +" sudo arp -s 169.254.21.224 a0:ce:c8:1d:04:e3")
+    # # miniPC
+    # print("Setting up miniPC")
+    # run_command("ssh p4switch@10.42.0.11 sudo ifconfig enxa0cec81d033a 169.254.21.220 netmask 255.255.0.0;"
+    #             +" sudo ifconfig enxa0cec81d4021 169.254.21.221 netmask 255.255.0.0;" 
+    #             +" sudo ifconfig enx00e04c36ae32 169.254.18.164 netmask 255.255.0.0;" 
+    #             +" sudo ifconfig enxa0cec81d046b 169.254.21.219 netmask 255.255.0.0;")
+
