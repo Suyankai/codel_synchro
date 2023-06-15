@@ -20,8 +20,8 @@ set_queue_depth 10000 2           		//in nb_pkts
 set_queue_rate 500 3             		//in pps
 set_queue_depth 10000 3           		//in nb_pkts
 
-set_queue_rate 500 3             		//in pps
-set_queue_depth 10000 3           		//in nb_pkts
+set_queue_rate 500 4             		//in pps
+set_queue_depth 10000 4           		//in nb_pkts
 
 table_set_default t_codel_control_law a_codel_control_law 552
 table_add t_codel_control_law a_codel_control_law 0/17 => 781
