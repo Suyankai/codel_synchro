@@ -12,7 +12,7 @@ import datetime
 from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
-import warnings
+#import warnings
 
 # import the data
 print(datetime.datetime.now(), "Import the data:")
@@ -22,7 +22,7 @@ df_pih1_receive = pd.read_csv("pi4_pih1_baseline_1.csv", sep=",")
 df_pih2_receive = pd.read_csv("pi4_pih2_baseline_1.csv", sep=",")
 
 print(datetime.datetime.now(), "Format the time in all dataset:")
-warnings.filterwarnings('ignore', category=pd.core.common.SettingWithCopyWarning)
+#warnings.filterwarnings('ignore', category=pd.core.common.SettingWithCopyWarning)
 for i in range(len(df_pih1_send)):
     df_pih1_send['Time'][i] = datetime.datetime.strptime(df_pih1_send['Time'][i], '%Y-%m-%d %H:%M:%S,%f')
 
