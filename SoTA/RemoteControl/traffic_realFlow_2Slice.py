@@ -34,7 +34,7 @@ if __name__ == "__main__":
     client_cmds = []
     server_cmds = []
 
-    pih1 = "ssh pih1@10.42.0.5 'sudo tcpreplay -i eth1 --duration=12 /home/pih1/DA/TestResource/haptic_flow.pcapng'"  
+    pih1 = "ssh pih1@10.42.0.5 'sudo tcpreplay -i eth1 --duration=12 /home/pih1/DA/TestResource/db_35_stiffness_90_sm_modified.pcapng'"  
     pih2 = "ssh pih2@10.42.0.6 'ffmpeg -re -i /home/pih2/DA/TestResource/Big_Buck_Bunny_1080_10s_5MB_good.mp4 -c copy -f flv udp://169.254.18.165:9001'" 
     #pi2  = f"ssh pi2@10.42.0.3  'iperf -c 169.254.18.165 -p 5020 -b 1M -t 60 -i 1 -e > DA/SoTA/{mode}/log_h3_c_tcp_synchro_{mode}_{naming}.txt' " 
     client_cmds.append(pih1)

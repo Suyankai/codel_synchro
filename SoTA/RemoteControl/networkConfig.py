@@ -34,6 +34,7 @@ if __name__ == "__main__":
     print("Setting up miniPC")
     run_command("ssh p4switch@10.42.0.11 sudo ifconfig enxa0cec81d033a 169.254.21.220 netmask 255.255.0.0;"
                 +" sudo ifconfig enxa0cec81d4021 169.254.21.221 netmask 255.255.0.0;" 
-                +" sudo ifconfig enxa0cec81d4000 169.254.18.164 netmask 255.255.0.0;" 
-                +" sudo ifconfig enxa0cec81d046b 169.254.21.219 netmask 255.255.0.0;")
+                +" sudo ifconfig enxa0cec81d4000 169.254.18.164 netmask 255.255.0.0;")
+
+                #+" sudo ifconfig enxa0cec81d046b 169.254.21.219 netmask 255.255.0.0;")
 
