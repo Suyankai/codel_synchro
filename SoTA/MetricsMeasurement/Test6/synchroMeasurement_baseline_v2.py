@@ -95,7 +95,8 @@ df_pair_receive['time_pih2_receive'] = time_pih2_receive
 df_pair_receive['Synchro_receive'] = None
 for i in range(len(df_pair_receive)):
     if (df_pair_receive['time_pih1_receive'][i] != 'Pkt lost') and (df_pair_receive['time_pih2_receive'][i] != 'Pkt lost'):
-        df_pair_receive['Synchro_receive'][i] = abs(df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i])
+        #df_pair_receive['Synchro_receive'][i] = abs(df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i])
+        df_pair_receive['Synchro_receive'][i] = df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i]
         df_pair_receive['Synchro_receive'][i] = df_pair_receive['Synchro_receive'][i].total_seconds() * 1000
 
 
@@ -108,3 +109,8 @@ event_pkt_loss = df_pair_receive['Synchro_receive'].isna().sum() / len(df_pair_r
 print("Average synchronization difference of sending is:", avr_sychro_send,"ms")
 print("Average synchronization difference of receiving is:",avr_sychro_receive,"ms")
 print("Event pair loss rate is:", event_pkt_loss,"%")
+
+fig,ax = plt.subplots()
+#ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()], showfliers=False)
+ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()])
+ax.grid(True)

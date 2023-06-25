@@ -111,5 +111,6 @@ print("Average synchronization difference of receiving is:",avr_sychro_receive,"
 print("Event pair loss rate is:", event_pkt_loss,"%")
 
 fig,ax = plt.subplots()
-#ax.boxplot([df_pair_send['Synchro_send'],df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()]])
+#ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()], showfliers=False)
 ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()])
+ax.grid(True)
