@@ -240,8 +240,8 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
        slice_priority.apply();
 
        // Synchronization queueing
-       bit<1> synchro_7_first;
-       r_synchro_7_first.read((bit<1>)synchro_7_first, (bit<32>)standard_metadata.egress_port);
+       bit<1> synchro_7_first = 1w0;
+       r_synchro_7_first.read(synchro_7_first, (bit<32>)standard_metadata.egress_port);
 
        if (standard_metadata.priority == 3w7){
         if (synchro_7_first != 1w1){
@@ -249,17 +249,17 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
             r_synchro_7_first.write((bit<32>)standard_metadata.egress_port,(bit<1>)1);
         }else {
             bit<48> synchro_7_enq;
-            r_synchro_7_enq.read((bit<48>)synchro_7_enq, (bit<32>)standard_metadata.egress_port);
+            r_synchro_7_enq.read(synchro_7_enq, (bit<32>)standard_metadata.egress_port);
 
-            if (standard_metadata.enq_timestamp - synchro_7_enq > THRE1) {
+            if ((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq > THRE1) {
                 r_synchro_7_enq.write((bit<32>)standard_metadata.egress_port, (bit<48>)standard_metadata.enq_timestamp);
             }
         }
        }else if (standard_metadata.priority == 3w3){
         bit<48> synchro_7_enq;
-        r_synchro_7_enq.read((bit<48>)synchro_7_enq, (bit<32>)standard_metadata.egress_port);
+        r_synchro_7_enq.read(synchro_7_enq, (bit<32>)standard_metadata.egress_port);
 
-        if (standard_metadata.enq_timestamp - synchro_7_enq < THRE2 || synchro_7_enq - standard_metadata.enq_timestamp > THRE2) {
+        if ((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq < THRE2 || synchro_7_enq - (bit<48>)standard_metadata.enq_timestamp > THRE2) {
             standard_metadata.priority = 3w6;
         }
        }
