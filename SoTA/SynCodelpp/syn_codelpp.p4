@@ -18,10 +18,13 @@
 #include <v1model.p4>
 
 //Codel
-#define SOJOURN_TARGET 500 //in usec - 0.35ms
+#define SOJOURN_TARGET 500 //in usec - 0.5ms
 #define CONTROL_INTERVAL 48w10000//in usec - 10 ms - RTT
 #define INTERFACE_MTU 1500
 #define NO_QUEUE_ID 32w64
+
+#define THRE1 48w1000 // 1ms
+#define THRE2 48w1000 // 1ms
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
 register<bit<48>>(NO_QUEUE_ID) r_drop_time;
@@ -69,6 +72,9 @@ register<bit<19>>(NO_QUEUE_ID) r_slice_deq_5;
 register<bit<19>>(NO_QUEUE_ID) r_slice_deq_6;
 register<bit<19>>(NO_QUEUE_ID) r_slice_deq_7;
 
+//Synchronization group
+register<bit<48>>(NO_QUEUE_ID) r_synchro_7_enq;
+register<bit<1>>(NO_QUEUE_ID)  r_synchro_7_first;
 
 //Header
 
@@ -232,8 +238,34 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
     apply {
        slice_forwarding.apply();
        slice_priority.apply();
-       
-       
+
+       // Synchronization queueing
+       bit<1> synchro_7_first;
+       r_synchro_7_first.read((bit<1>)synchro_7_first, (bit<32>)standard_metadata.egress_port);
+
+       if (standard_metadata.priority == 3w7){
+        if (synchro_7_first != 1w1){
+            r_synchro_7_enq.write((bit<32>)standard_metadata.egress_port, (bit<48>)standard_metadata.enq_timestamp);
+            r_synchro_7_first.write((bit<32>)standard_metadata.egress_port,(bit<1>)1);
+        }else {
+            bit<48> synchro_7_enq;
+            r_synchro_7_enq.read((bit<48>)synchro_7_enq, (bit<32>)standard_metadata.egress_port);
+
+            if (standard_metadata.enq_timestamp - synchro_7_enq > THRE1) {
+                r_synchro_7_enq.write((bit<32>)standard_metadata.egress_port, (bit<48>)standard_metadata.enq_timestamp);
+            }
+        }
+       }else if (standard_metadata.priority == 3w3){
+        bit<48> synchro_7_enq;
+        r_synchro_7_enq.read((bit<48>)synchro_7_enq, (bit<32>)standard_metadata.egress_port);
+
+        if (standard_metadata.enq_timestamp - synchro_7_enq < THRE2 || synchro_7_enq - standard_metadata.enq_timestamp > THRE2) {
+            standard_metadata.priority = 3w6;
+        }
+       }
+
+
+       // Priority queueing
        if (standard_metadata.priority == 3w7){
        	r_slice_drop_7.read(meta.prio.prio_drop, (bit<32>)standard_metadata.egress_port);
        	

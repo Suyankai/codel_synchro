@@ -50,7 +50,7 @@ print(datetime.datetime.now(), "Form the sending pkt pair: \n")
 for i in tqdm(range(len(df_pih1_send))):
     pih1_send_indicator = df_pih1_send['Time'][i]
     closest_time_pih2 = min(df_pih2_send['Time'], key=lambda x: abs(x - pih1_send_indicator))
-    if abs((pih1_send_indicator - closest_time_pih2)).total_seconds() * 1000 > 1.1:
+    if abs((pih1_send_indicator - closest_time_pih2)).total_seconds() * 1000 > 1:
         continue
     else:
         ID_pih1.append(df_pih1_send['Identification'][i])
@@ -95,8 +95,8 @@ df_pair_receive['time_pih2_receive'] = time_pih2_receive
 df_pair_receive['Synchro_receive'] = None
 for i in range(len(df_pair_receive)):
     if (df_pair_receive['time_pih1_receive'][i] != 'Pkt lost') and (df_pair_receive['time_pih2_receive'][i] != 'Pkt lost'):
-        #df_pair_receive['Synchro_receive'][i] = abs(df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i])
-        df_pair_receive['Synchro_receive'][i] = df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i]
+        df_pair_receive['Synchro_receive'][i] = abs(df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i])
+        #df_pair_receive['Synchro_receive'][i] = df_pair_receive['time_pih1_receive'][i] - df_pair_receive['time_pih2_receive'][i]
         df_pair_receive['Synchro_receive'][i] = df_pair_receive['Synchro_receive'][i].total_seconds() * 1000
 
 
