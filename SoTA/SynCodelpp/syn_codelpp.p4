@@ -259,8 +259,8 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
         bit<48> synchro_7_enq;
         r_synchro_7_enq.read(synchro_7_enq, (bit<32>)standard_metadata.egress_port);
 
-        if ((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq < THRE2 || synchro_7_enq - (bit<48>)standard_metadata.enq_timestamp > THRE2) {
-            standard_metadata.priority = 3w6;
+        if ((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq < THRE2 || synchro_7_enq - (bit<48>)standard_metadata.enq_timestamp > THRE2) { // here might be some problems
+            standard_metadata.priority = 3w3;
         }
        }
 

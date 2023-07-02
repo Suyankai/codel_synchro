@@ -15,8 +15,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     mode = args.mode
-    if args.mode != "Baseline" and args.mode != "Codelpp":
-        parser.error("No option selected. Please choose either Baseline/Codel.")
+    if args.mode != "Baseline" and args.mode != "Codelpp" and args.mode != "SynCodelpp":
+        parser.error("No option selected. Please choose either Baseline/Codel/SynCodelpp.")
     naming = args.naming
 
     # Get .pcap from pih1
