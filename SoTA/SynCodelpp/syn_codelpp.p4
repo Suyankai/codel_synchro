@@ -73,13 +73,17 @@ register<bit<19>>(NO_QUEUE_ID) r_slice_deq_6;
 register<bit<19>>(NO_QUEUE_ID) r_slice_deq_7;
 
 //Synchronization group
-register<bit<48>>(1) r_synchro_7_enq;
+register<bit<48>>(1) r_synchro_7_ingress;
 register<bit<1>>(1)  r_synchro_7_first;
 
 //debug variables
 register<bit<32>>(1) r_egress_port_debug;
 register<bit<48>>(1) r_enq_timestamp_debug;
 register<bit<48>>(1) r_time_now_debug;
+register<bit<48>>(1) r_ingress_global_timestamp_debug;
+register<bit<48>>(1) r_egress_global_timestamp_debug;
+register<bit<48>>(1) r_Delta1_debug;
+register<bit<48>>(1) r_Delta2_debug;
 //Header
 
 
@@ -243,36 +247,6 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
        slice_forwarding.apply();
        slice_priority.apply();
 
-       // Synchronization queueing
-       bit<1> synchro_7_first;
-       r_synchro_7_first.read(synchro_7_first, (bit<32>)0);
-       bit<48> synchro_7_enq;
-       r_synchro_7_enq.read(synchro_7_enq, (bit<32>)0);
-
-       // Read the egree port
-       //r_egress_port_debug.write((bit<32>)0, (bit<32>)standard_metadata.egress_port);
-       // Show enq_timestamp
-       r_enq_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.enq_timestamp);
-
-       if (standard_metadata.priority == 3w7){
-        if (synchro_7_first != 1w1){
-            r_synchro_7_enq.write((bit<32>)0, (bit<48>)standard_metadata.enq_timestamp);
-            r_synchro_7_first.write((bit<32>)0,(bit<1>)1);
-        }else {
-            bit<48> synchro_7_enq;
-            r_synchro_7_enq.read(synchro_7_enq, (bit<32>)0);
-
-            if ((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq > THRE1) {
-                r_synchro_7_enq.write((bit<32>)0, (bit<48>)standard_metadata.enq_timestamp);
-            }
-        }
-       }else if (standard_metadata.priority == 3w3){
-        if (((bit<48>)standard_metadata.enq_timestamp - synchro_7_enq < THRE2 && (bit<48>)standard_metadata.enq_timestamp > synchro_7_enq)||(synchro_7_enq > (bit<48>)standard_metadata.enq_timestamp && synchro_7_enq - (bit<48>)standard_metadata.enq_timestamp < THRE2)) { // here might be some problems
-            standard_metadata.priority = 3w3;
-        }
-       }
-
-
        // Priority queueing
        if (standard_metadata.priority == 3w7){
        	r_slice_drop_7.read(meta.prio.prio_drop, (bit<32>)standard_metadata.egress_port);
@@ -324,7 +298,7 @@ control c_codel(inout headers hdr, inout metadata meta, inout standard_metadata_
         meta.codel.ok_to_drop = 1w0;
         meta.codel.time_now = (bit<48>)standard_metadata.enq_timestamp + (bit<48>)standard_metadata.deq_timedelta;
         
-        r_time_now_debug.write((bit<32>)0,(bit<48>)meta.codel.time_now);
+        //r_time_now_debug.write((bit<32>)0,(bit<48>)meta.codel.time_now);
 
         meta.codel.new_drop_time = meta.codel.time_now + CONTROL_INTERVAL;
         r_state_dropping.read(meta.codel.state_dropping, (bit<32>)meta.codel.queue_id);
@@ -418,7 +392,41 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
 
         // timestamp test
         r_enq_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.enq_timestamp);
-        
+
+        meta.codel.time_now = (bit<48>)standard_metadata.enq_timestamp + (bit<48>)standard_metadata.deq_timedelta;
+        r_time_now_debug.write((bit<32>)0,(bit<48>)meta.codel.time_now);
+
+        r_ingress_global_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.ingress_global_timestamp);
+        r_egress_global_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.egress_global_timestamp);
+
+
+        // Synchronization queueing
+        bit<1> synchro_7_first;
+        r_synchro_7_first.read(synchro_7_first, (bit<32>)0);
+        bit<48> synchro_7_ingress;
+        r_synchro_7_ingress.read(synchro_7_ingress, (bit<32>)0);
+
+        if (standard_metadata.priority == 3w7){
+            
+            r_synchro_7_ingress.write((bit<32>)0, (bit<48>)standard_metadata.ingress_global_timestamp);
+                
+            
+        }else if (standard_metadata.priority == 3w3){
+            if (((bit<48>)standard_metadata.ingress_global_timestamp - synchro_7_ingress < THRE2 && (bit<48>)standard_metadata.ingress_global_timestamp > synchro_7_ingress)||(synchro_7_ingress > (bit<48>)standard_metadata.ingress_global_timestamp && synchro_7_ingress - (bit<48>)standard_metadata.ingress_global_timestamp < THRE2)) { // here might be some problems
+                standard_metadata.priority = 3w5;
+            }
+            if ((bit<48>)standard_metadata.ingress_global_timestamp > synchro_7_ingress){
+                bit<48> Delta1;
+                Delta1 = (bit<48>)standard_metadata.ingress_global_timestamp - synchro_7_ingress;
+                r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
+            }else if (synchro_7_ingress > (bit<48>)standard_metadata.ingress_global_timestamp){
+                bit<48> Delta2;
+                Delta2 = synchro_7_ingress - (bit<48>)standard_metadata.ingress_global_timestamp;
+                r_Delta2_debug.write((bit<32>)0, (bit<48>)Delta2);
+            }
+        }
+
+
         
         if (standard_metadata.priority == 3w7){
         	r_slice_time_7.write((bit<32>)meta.codel.queue_id, (bit<32>)standard_metadata.deq_timedelta);
