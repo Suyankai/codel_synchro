@@ -9,7 +9,7 @@ table_add slice_priority set_priority 169.254.21.222 => 7
 table_add slice_priority set_priority 169.254.21.223 => 3
 
 
-set_queue_rate 500 2
+set_queue_rate 200 2
 set_queue_depth 10000 2
 
 
