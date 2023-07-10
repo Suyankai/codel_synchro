@@ -28,3 +28,5 @@ if __name__ == "__main__":
     # Get .pcap from pi4
     run_command(f"ssh pi4@10.42.0.2 sudo chown pi4:pi4 /home/pi4/DA/SoTA/{mode}/Synchro/pi4_{mode}_synchro_{naming}.pcap")
     run_command(f"scp pi4@10.42.0.2:/home/pi4/DA/SoTA/{mode}/Synchro/pi4_{mode}_synchro_{naming}.pcap  /home/su/Project/codel_synchro/LogMountain ")
+    # Get log file from switch
+    run_command(f"scp p4switch@10.42.0.11:/home/p4switch/p4/SoTA/{mode}/log/{mode}_p4_{naming}.txt  /home/su/Project/codel_synchro/LogMountain")
