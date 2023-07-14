@@ -16,10 +16,10 @@ import matplotlib.pyplot as plt
 
 # import the data
 print(datetime.datetime.now(), "Import the data:")
-df_pih1_send = pd.read_csv("pih1_Baseline_synchro_test_37.csv", sep=",")
-df_pih2_send = pd.read_csv("pih2_Baseline_synchro_test_37.csv", sep=",")
-df_pih1_receive = pd.read_csv("pi4_Baseline_synchro_test_37_pih1.csv", sep=",")
-df_pih2_receive = pd.read_csv("pi4_Baseline_synchro_test_37_pih2.csv", sep=",")
+df_pih1_send = pd.read_csv("pih1_Codelpp_synchro_test_9.csv", sep=",")
+df_pih2_send = pd.read_csv("pih2_Codelpp_synchro_test_9.csv", sep=",")
+df_pih1_receive = pd.read_csv("pi4_Codelpp_synchro_test_9_pih1.csv", sep=",")
+df_pih2_receive = pd.read_csv("pi4_Codelpp_synchro_test_9_pih2.csv", sep=",")
 pd.options.mode.chained_assignment = None 
 
 print(datetime.datetime.now(), "Format the time in all dataset:")
@@ -108,7 +108,3 @@ event_pkt_loss = df_pair_receive['Synchro_receive'].isna().sum() / len(df_pair_r
 print("Average synchronization difference of sending is:", avr_sychro_send,"ms")
 print("Average synchronization difference of receiving is:",avr_sychro_receive,"ms")
 print("Event pair loss rate is:", event_pkt_loss,"%")
-fig,ax = plt.subplots()
-#ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()], showfliers=False)
-ax.boxplot(df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()])
-ax.grid(True)
