@@ -149,7 +149,7 @@ if __name__ == "__main__":
     boxplots_h = box_plot(latency_values_haptic_only, 'red', 'tan',haptic_only_labels)
     
     # Set y-axis label
-    ax.set_ylabel('Latency/ms')
+    ax.set_ylabel('Latency (ms)')
     
     # Set plot title
     plt.title('Latency of Haptic Flow: Target Priority as Variable')
@@ -163,7 +163,7 @@ if __name__ == "__main__":
     
     
     
-    # Iterate over each dataframe and extract the "Latency" column values
+    # Latency evaluation
     empty_series = pd.Series()
     for i, df in enumerate(dfs):
         if is_odd(i):
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     ax.legend([boxplots1["boxes"][0], boxplots2["boxes"][0]], ['Haptic', 'Video'])
     
     # Set y-axis label
-    ax.set_ylabel('Latency/ms')
+    ax.set_ylabel('Latency (ms)')
     
     # Set plot title
     plt.title('Latency of Haptic and Video Flow: Target Priority as Variable')
@@ -197,6 +197,38 @@ if __name__ == "__main__":
     
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=500)) 
     
-        
+    # Display the plot
+    plt.show()
+    
+    
+    #pkt lost evaluation
+    # Sample data
+    values = [baseline_pkt_loss_pih1, baseline_pkt_loss_pih2, codelpp_pkt_loss_pih1, codelpp_pkt_loss_pih2, synPrio4_pkt_loss_pih1,synPrio4_pkt_loss_pih2, synPrio5_pkt_loss_pih1,synPrio5_pkt_loss_pih2, synPrio6_pkt_loss_pih1,synPrio6_pkt_loss_pih2, synPrio7_pkt_loss_pih1, synPrio7_pkt_loss_pih2]
+    
+    # Create a Figure and Axes object
+    fig, ax = plt.subplots(figsize=(12, 6))
+    
+    # Plotting the histogram
+    ax.bar(range(len(values)), values, width=0.6)
+    
+    # Adding labels and title
+    ax.set_ylabel('Packet loss rate (%)')
+    ax.set_title('Packet Loss Rate of Haptic and Video Flow: Target Priority as Variable')
+    
+    # Customizing x-axis tick labels
+    ax.set_xticks(range(len(values)))
+    ax.set_xticklabels(boxplot_labels)
+    
+    # Add vertical line to separate the groups
+    ax.axvline(x=1.5, color='gray', linestyle='--')
+    ax.axvline(x=3.5, color='gray', linestyle='--')
+    ax.axvline(x=5.5, color='gray', linestyle='--')
+    ax.axvline(x=7.5, color='gray', linestyle='--')
+    ax.axvline(x=9.5, color='gray', linestyle='--')
+    
+    ax.yaxis.set_major_locator(plt.MultipleLocator(base=1)) 
+    
+    ax.grid(True)
+    
     # Display the plot
     plt.show()
