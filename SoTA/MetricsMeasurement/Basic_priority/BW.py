@@ -91,12 +91,12 @@ if __name__ == "__main__":
     plt.show()
     
     #Video BW
-    dfs_haptic = [df_synPrio5_pih2_send, df_baseline_pih2_receive, df_codelpp_pih2_receive, df_synPrio4_pih2_receive, df_synPrio5_pih2_receive, df_synPrio6_pih2_receive, df_synPrio7_pih2_receive]
+    dfs_video = [df_synPrio5_pih2_send, df_baseline_pih2_receive, df_codelpp_pih2_receive, df_synPrio4_pih2_receive, df_synPrio5_pih2_receive, df_synPrio6_pih2_receive, df_synPrio7_pih2_receive]
     
     fig, ax = plt.subplots(figsize=(14, 6))
         
     labels = ["Send","Baseline", "Codelpp","SynCodelpp prio=4","SynCodelpp prio=5","SynCodelpp prio=6","SynCodelpp prio=7"]
-    boxplots_h = box_plot(dfs_haptic, 'red', 'tan', labels)
+    boxplots_v = box_plot(dfs_video, 'blue', 'cyan', labels)
     
     # Set y-axis label
     ax.set_ylabel('Bandwidth (MB)')
