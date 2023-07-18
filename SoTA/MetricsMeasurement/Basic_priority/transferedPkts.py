@@ -23,7 +23,7 @@ ax.set_title('Percentage of Prioritized Video Packets: Target Priority as Variab
 
 # Customizing x-axis tick labels
 ax.set_xticks(range(len(values)))
-ax.set_xticklabels(["prio=4","prio=5","prio=6","prio=7"])
+ax.set_xticklabels(["PRIO=4","PRIO=5","PRIO=6","PRIO=7"])
 
 ax.yaxis.set_major_locator(plt.MultipleLocator(base=1)) 
 

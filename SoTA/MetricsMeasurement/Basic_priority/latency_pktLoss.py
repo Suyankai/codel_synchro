@@ -145,14 +145,14 @@ if __name__ == "__main__":
         if not is_odd(i):
             latency_values_haptic_only.append(df['Latency'][df['Latency'].notna()])
         
-    haptic_only_labels = ["Codelpp","SynCodelpp prio=4","SynCodelpp prio=5","SynCodelpp prio=6","SynCodelpp prio=7"]
+    haptic_only_labels = ["Codelpp","SynCodelpp PRIO=4","SynCodelpp PRIO=5","SynCodelpp PRIO=6","SynCodelpp PRIO=7"]
     boxplots_h = box_plot(latency_values_haptic_only, 'red', 'tan',haptic_only_labels)
     
     # Set y-axis label
     ax.set_ylabel('Latency (ms)')
     
     # Set plot title
-    plt.title('Latency of Haptic Flow: Target Priority as Variable')
+    plt.title('Latency of Haptic Flow: PRIO as Variable')
     
     # Add a line graph
     # h_values = [codelpp_avr_pih1_latency, synPrio4_avr_pih1_latency, synPrio5_avr_pih1_latency, synPrio6_avr_pih1_latency, synPrio7_avr_pih1_latency]  
@@ -176,7 +176,7 @@ if __name__ == "__main__":
    # Create a figure and axis object
     fig, ax = plt.subplots(figsize=(12, 6))
         
-    boxplot_labels = ["               Baseline","","               Codelpp","","                SynCodelpp pri=4","","                SynCodelpp pri=5","","                SynCodelpp pri=6","","                SynCodelpp pri=7",""]
+    boxplot_labels = ["               Baseline","","               Codelpp","","                SynCodelpp PRIO=4","","                SynCodelpp PRIO=5","","                SynCodelpp PRIO=6","","                SynCodelpp PRIO=7",""]
     
     boxplots1 = box_plot(latency_values_haptic, 'red', 'tan', boxplot_labels)
     boxplots2 = box_plot(latency_values_video, 'blue', 'cyan', boxplot_labels)
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     ax.set_ylabel('Latency (ms)')
     
     # Set plot title
-    plt.title('Latency of Haptic and Video Flow: Target Priority as Variable')
+    plt.title('Latency of Haptic and Video Flow: PRIO as Variable')
     
     # Add vertical line to separate the groups
     ax.axvline(x=2.5, color='gray', linestyle='--')
@@ -206,14 +206,14 @@ if __name__ == "__main__":
     values = [baseline_pkt_loss_pih1, baseline_pkt_loss_pih2, codelpp_pkt_loss_pih1, codelpp_pkt_loss_pih2, synPrio4_pkt_loss_pih1,synPrio4_pkt_loss_pih2, synPrio5_pkt_loss_pih1,synPrio5_pkt_loss_pih2, synPrio6_pkt_loss_pih1,synPrio6_pkt_loss_pih2, synPrio7_pkt_loss_pih1, synPrio7_pkt_loss_pih2]
     
     # Create a Figure and Axes object
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(13, 6))
     
     # Plotting the histogram
     ax.bar(range(len(values)), values, width=0.6)
     
     # Adding labels and title
     ax.set_ylabel('Packet loss rate (%)')
-    ax.set_title('Packet Loss Rate of Haptic and Video Flow: Target Priority as Variable')
+    ax.set_title('Packet Loss Rate of Haptic and Video Flow: PRIO as Variable')
     
     # Customizing x-axis tick labels
     ax.set_xticks(range(len(values)))

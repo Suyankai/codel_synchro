@@ -23,7 +23,7 @@
 #define INTERFACE_MTU 1500
 #define NO_QUEUE_ID 32w64
 
-#define THRE1 48w3000 // 1ms
+#define THRE1 48w15000 // 1ms
 #define THRE2 48w1000 // 1ms
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
@@ -263,7 +263,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
             r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
 
             if (Delta1 < THRE1) {
-                standard_metadata.priority = 3w6;
+                standard_metadata.priority = 3w7;
             }
             
         }

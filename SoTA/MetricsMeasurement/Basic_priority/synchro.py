@@ -146,7 +146,7 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(12, 6))
         
-    labels = ["Baseline", "Codelpp","SynCodelpp prio=4","SynCodelpp prio=5","SynCodelpp prio=6","SynCodelpp prio=7"]
+    labels = ["Baseline", "Codelpp","SynCodelpp PRIO=4","SynCodelpp PRIO=5","SynCodelpp PRIO=6","SynCodelpp PRIO=7"]
     boxplots_h = box_plot(dfs, 'red', 'tan', labels)
     
     # Set y-axis label

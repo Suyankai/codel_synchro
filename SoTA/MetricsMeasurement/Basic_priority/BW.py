@@ -78,14 +78,14 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(14, 6))
         
-    labels = ["Send","Baseline", "Codelpp","SynCodelpp prio=4","SynCodelpp prio=5","SynCodelpp prio=6","SynCodelpp prio=7"]
+    labels = ["Send","Baseline", "Codelpp","SynCodelpp PRIO=4","SynCodelpp PRIO=5","SynCodelpp PRIO=6","SynCodelpp PRIO=7"]
     boxplots_h = box_plot(dfs_haptic, 'red', 'tan', labels)
     
     # Set y-axis label
     ax.set_ylabel('Bandwidth (MB)')
     
     # Set plot title
-    plt.title('Bandwidth of Haptic Flow: Target Priority as Variable')
+    plt.title('Bandwidth of Haptic Flow: PRIO as Variable')
 
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.025)) 
     plt.show()
@@ -95,14 +95,14 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(14, 6))
         
-    labels = ["Send","Baseline", "Codelpp","SynCodelpp prio=4","SynCodelpp prio=5","SynCodelpp prio=6","SynCodelpp prio=7"]
+    labels = ["Send","Baseline", "Codelpp","SynCodelpp PRIO=4","SynCodelpp PRIO=5","SynCodelpp PRIO=6","SynCodelpp PRIO=7"]
     boxplots_v = box_plot(dfs_video, 'blue', 'cyan', labels)
     
     # Set y-axis label
     ax.set_ylabel('Bandwidth (MB)')
     
     # Set plot title
-    plt.title('Bandwidth of Video Flow: Target Priority as Variable')
+    plt.title('Bandwidth of Video Flow: PRIO as Variable')
 
-    #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.025)) 
+    ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.25)) 
     plt.show()
