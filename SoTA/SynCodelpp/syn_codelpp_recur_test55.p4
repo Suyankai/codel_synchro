@@ -286,7 +286,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
             //r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
 
             if (Delta1 < THRE1) {
-                standard_metadata.priority = 3w3;
+                standard_metadata.priority = 3w7;
 
                 meta.synchro.v_isEvent = 1w1;
                 meta.synchro.v_h_count = h_count - 32w1;

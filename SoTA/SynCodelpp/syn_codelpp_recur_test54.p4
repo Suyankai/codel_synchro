@@ -86,7 +86,6 @@ register<bit<48>>(1) r_time_now_debug;
 register<bit<48>>(1) r_ingress_global_timestamp_debug;
 register<bit<48>>(1) r_egress_global_timestamp_debug;
 register<bit<48>>(1) r_Delta1_debug;
-register<bit<48>>(1) r_Delta1_event_debug;
 register<bit<48>>(1) r_Delta2_debug;
 //Header
 
@@ -119,8 +118,6 @@ struct synchro_t {
     bit<1>  v_isEvent;
     bit<32> v_h_count;
     bit<3>  v_prio_original;
-    bit<48> delta_ingress;
-    bit<48> delta_egress;
 }
 
 header ethernet_t {
@@ -283,14 +280,13 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
 
             bit<48> Delta1;
             Delta1 = (bit<48>)standard_metadata.ingress_global_timestamp - synchro_7_ingress;
-            //r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
+            r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
 
             if (Delta1 < THRE1) {
-                standard_metadata.priority = 3w3;
+                standard_metadata.priority = 3w7;
 
                 meta.synchro.v_isEvent = 1w1;
                 meta.synchro.v_h_count = h_count - 32w1;
-                meta.synchro.delta_ingress = Delta1;
 
             }
             
@@ -458,12 +454,9 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                 r_h_time.read(h_time, (bit<32>)meta.synchro.v_h_count);
                 if (h_time != 48w0){
                     if (standard_metadata.egress_global_timestamp > h_time){
-                        //bit<48> Delta2;
-                        //Delta2 = (bit<48>)standard_metadata.egress_global_timestamp - h_time;
-                        meta.synchro.delta_egress = (bit<48>)standard_metadata.egress_global_timestamp - h_time;
-                        
-                        r_Delta1_debug.write((bit<32>)0, (bit<48>)meta.synchro.delta_ingress);
-                        r_Delta2_debug.write((bit<32>)0, (bit<48>)meta.synchro.delta_egress);
+                        bit<48> Delta2;
+                        Delta2 = (bit<48>)standard_metadata.egress_global_timestamp - h_time;
+                        r_Delta2_debug.write((bit<32>)0, (bit<48>)Delta2);
                     }
                 }
             }
