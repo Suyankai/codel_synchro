@@ -516,6 +516,9 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                         r_Delta1_debug.write((bit<32>)0, (bit<48>)meta.synchro.delta_ingress);
                         r_Delta2_debug.write((bit<32>)0, (bit<48>)meta.synchro.delta_egress);
 
+                        bit<32> drop_pkt_cnt;
+                        r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
+
                         // Entering synchronization mode or not
                         if (meta.synchro.delta_egress > THRE2) {
                             // enter the syn mode
@@ -523,9 +526,7 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                         }
 
                         // Leaving synchronization mode or not
-                        bit<32> drop_pkt_cnt;
-                        r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
-  
+                        
                         // bit<32> pkt_cnt;
                         // r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
 

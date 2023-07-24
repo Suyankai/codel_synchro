@@ -268,15 +268,15 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
        slice_priority.apply();
 
         // Pkt counting
-        // bit<32> pkt_cnt;
-        // r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
-        // pkt_cnt = pkt_cnt + 32w1;
-        // if (pkt_cnt == 32w100) {
-        //     r_pkt_cnt.write((bit<32>)0, (bit<32>)0);
-        //     r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
-        // } else {
-        //     r_pkt_cnt.write((bit<32>)0, (bit<32>)pkt_cnt);
-        // }
+        bit<32> pkt_cnt;
+        r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
+        pkt_cnt = pkt_cnt + 32w1;
+        if (pkt_cnt == 32w100) {
+            r_pkt_cnt.write((bit<32>)0, (bit<32>)0);
+            r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
+        } else {
+            r_pkt_cnt.write((bit<32>)0, (bit<32>)pkt_cnt);
+        }
         
 
         // Synchronization queueing 
@@ -310,7 +310,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
                 bit<32> drop_pkt_cnt;
                 r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
 
-                if (SynSwitch == 1w0) {
+                if (SynSwitch == 1w0 && drop_pkt_cnt == 32w0) {
                     standard_metadata.priority = 3w3;
                 } else {
                     standard_metadata.priority = PRIO;
@@ -496,7 +496,6 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
         r_last_time_flag.read(last_time_flag,(bit<32>)0);
         if ((bit<48>)standard_metadata.egress_global_timestamp - last_time_flag > 48w1000000){
             r_last_time_flag.write((bit<32>)0, (bit<48>)standard_metadata.egress_global_timestamp);
-            r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
         }
 
         // Synchronize queueing with feedback loop
@@ -525,9 +524,9 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                         // Leaving synchronization mode or not
                         bit<32> drop_pkt_cnt;
                         r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
-  
-                        // bit<32> pkt_cnt;
-                        // r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
+
+                        bit<32> pkt_cnt;
+                        r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
 
                         // if (meta.synchro.delta_egress < 48w10000 && drop_pkt_cnt == 32w0 && pkt_cnt > 32w90) {
                         //     r_SynSwitch.write((bit<32>)0, (bit<1>)0);
