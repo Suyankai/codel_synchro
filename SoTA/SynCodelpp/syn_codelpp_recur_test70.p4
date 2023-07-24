@@ -494,7 +494,7 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
         // Clock every 1s
         bit<48> last_time_flag;
         r_last_time_flag.read(last_time_flag,(bit<32>)0);
-        if ((bit<48>)standard_metadata.egress_global_timestamp - last_time_flag > 48w1000000){
+        if ((bit<48>)standard_metadata.egress_global_timestamp - last_time_flag > 48w10000000){
             r_last_time_flag.write((bit<32>)0, (bit<48>)standard_metadata.egress_global_timestamp);
             r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
         }

@@ -24,9 +24,8 @@
 #define NO_QUEUE_ID 32w64
 
 #define THRE1 48w3000 // 3ms
-#define THRE2 48w30000 // 50ms
+#define THRE2 48w50000 // 50ms
 #define PRIO  3w7 // Target priority
-#define PKT_LOST_INTERVAL 48w3500000 // wait till no pkt lost
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
 register<bit<48>>(NO_QUEUE_ID) r_drop_time;
@@ -81,12 +80,10 @@ register<bit<48>>(2000) r_h_time;
 register<bit<1>>(1)     r_SynSwitch;
 register<bit<48>>(1)    r_last_time_flag;
 
-
 // Pkt drop monitor
 register<bit<32>>(1)    r_pkt_cnt;
 register<bit<32>>(1)    r_drop_pkt_cnt;
-register<bit<48>>(1)    r_last_drop_time;
-register<bit<1>>(1)     r_start_to_drop;
+
 
 //debug variables
 register<bit<32>>(1) r_egress_port_debug;
@@ -97,7 +94,6 @@ register<bit<48>>(1) r_egress_global_timestamp_debug;
 register<bit<48>>(1) r_Delta1_debug;
 register<bit<48>>(1) r_Delta1_event_debug;
 register<bit<48>>(1) r_Delta2_debug;
-register<bit<48>>(1) r_time_to_last_drop_debug;
 //Header
 
 
@@ -271,6 +267,18 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
        slice_forwarding.apply();
        slice_priority.apply();
 
+        // Pkt counting
+        // bit<32> pkt_cnt;
+        // r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
+        // pkt_cnt = pkt_cnt + 32w1;
+        // if (pkt_cnt == 32w100) {
+        //     r_pkt_cnt.write((bit<32>)0, (bit<32>)0);
+        //     r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
+        // } else {
+        //     r_pkt_cnt.write((bit<32>)0, (bit<32>)pkt_cnt);
+        // }
+        
+
         // Synchronization queueing 
         bit<48> synchro_7_ingress;
         r_synchro_7_ingress.read(synchro_7_ingress, (bit<32>)0);
@@ -293,6 +301,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
 
             bit<48> Delta1;
             Delta1 = (bit<48>)standard_metadata.ingress_global_timestamp - synchro_7_ingress;
+            //r_Delta1_debug.write((bit<32>)0, (bit<48>)Delta1);
 
             if (Delta1 < THRE1) {
                 bit<1> SynSwitch;
@@ -306,6 +315,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
                 } else {
                     standard_metadata.priority = PRIO;
                 }
+                //standard_metadata.priority = 3w3;
 
                 meta.synchro.v_isEvent = 1w1;
                 meta.synchro.v_h_count = h_count - 32w1;
@@ -348,8 +358,6 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
         r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
         drop_pkt_cnt = drop_pkt_cnt + 32w1;
         r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)drop_pkt_cnt);
-        r_last_drop_time.write((bit<32>)0, (bit<48>)standard_metadata.ingress_global_timestamp);
-        r_start_to_drop.write((bit<32>)0, (bit<1>)1);
 
 		mark_to_drop(standard_metadata);
 	}
@@ -373,6 +381,8 @@ control c_codel(inout headers hdr, inout metadata meta, inout standard_metadata_
     action a_codel_init() {
         meta.codel.ok_to_drop = 1w0;
         meta.codel.time_now = (bit<48>)standard_metadata.enq_timestamp + (bit<48>)standard_metadata.deq_timedelta;
+        
+        //r_time_now_debug.write((bit<32>)0,(bit<48>)meta.codel.time_now);
 
         meta.codel.new_drop_time = meta.codel.time_now + CONTROL_INTERVAL;
         r_state_dropping.read(meta.codel.state_dropping, (bit<32>)meta.codel.queue_id);
@@ -388,8 +398,6 @@ control c_codel(inout headers hdr, inout metadata meta, inout standard_metadata_
         r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
         drop_pkt_cnt = drop_pkt_cnt + 32w1;
         r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)drop_pkt_cnt);
-        r_last_drop_time.write((bit<32>)0, (bit<48>)standard_metadata.egress_global_timestamp);
-        r_start_to_drop.write((bit<32>)0, (bit<1>)1);
 
 
 	    mark_to_drop(standard_metadata);
@@ -473,6 +481,24 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
     apply {
         meta.codel.queue_id = standard_metadata.egress_port;
 
+        // timestamp test
+        // r_enq_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.enq_timestamp);
+
+        // meta.codel.time_now = (bit<48>)standard_metadata.enq_timestamp + (bit<48>)standard_metadata.deq_timedelta;
+        // r_time_now_debug.write((bit<32>)0,(bit<48>)meta.codel.time_now);
+
+        // r_ingress_global_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.ingress_global_timestamp);
+        // r_egress_global_timestamp_debug.write((bit<32>)0,(bit<48>)standard_metadata.egress_global_timestamp);
+
+
+        // Clock every 1s
+        bit<48> last_time_flag;
+        r_last_time_flag.read(last_time_flag,(bit<32>)0);
+        if ((bit<48>)standard_metadata.egress_global_timestamp - last_time_flag > 48w500000){
+            r_last_time_flag.write((bit<32>)0, (bit<48>)standard_metadata.egress_global_timestamp);
+            r_drop_pkt_cnt.write((bit<32>)0, (bit<32>)0);
+        }
+
         // Synchronize queueing with feedback loop
         if (meta.synchro.v_prio_original == 3w7){
             r_h_time.write((bit<32>)meta.synchro.h_count, (bit<48>)standard_metadata.egress_global_timestamp);
@@ -483,6 +509,8 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                 r_h_time.read(h_time, (bit<32>)meta.synchro.v_h_count);
                 if (h_time != 48w0){
                     if (standard_metadata.egress_global_timestamp > h_time){
+                        //bit<48> Delta2;
+                        //Delta2 = (bit<48>)standard_metadata.egress_global_timestamp - h_time;
                         meta.synchro.delta_egress = (bit<48>)standard_metadata.egress_global_timestamp - h_time;
                         
                         r_Delta1_debug.write((bit<32>)0, (bit<48>)meta.synchro.delta_ingress);
@@ -497,22 +525,24 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
                         // Leaving synchronization mode or not
                         bit<32> drop_pkt_cnt;
                         r_drop_pkt_cnt.read(drop_pkt_cnt,(bit<32>)0);
-                        
-                        bit<1> start_to_drop;
-                        r_start_to_drop.read(start_to_drop, (bit<32>)0);
-                        if (start_to_drop == 1) {
-                            bit<48> last_drop_time;
-                            r_last_drop_time.read(last_drop_time,(bit<32>)0);
-                            bit<48> time_to_last_drop;
-                            time_to_last_drop = (bit<48>)standard_metadata.egress_global_timestamp - last_drop_time;
-                            r_time_to_last_drop_debug.write((bit<32>)0, (bit<48>)time_to_last_drop);
+  
+                        // bit<32> pkt_cnt;
+                        // r_pkt_cnt.read(pkt_cnt,(bit<32>)0);
 
-                            if (time_to_last_drop > PKT_LOST_INTERVAL && meta.synchro.delta_egress < THRE2) {
-                                // leave the syn mode
-                                r_SynSwitch.write((bit<32>)0, (bit<1>)0);
+                        // if (meta.synchro.delta_egress < 48w10000 && drop_pkt_cnt == 32w0 && pkt_cnt > 32w90) {
+                        //     r_SynSwitch.write((bit<32>)0, (bit<1>)0);
+                        // }
+                        bit<48> Interval;
+                        r_last_time_flag.read(last_time_flag,(bit<32>)0);
+                        Interval = (bit<48>)standard_metadata.egress_global_timestamp - last_time_flag;
+                        if (Interval > 48w450000) {
+                            if (drop_pkt_cnt == 32w0) {
+                                if (meta.synchro.delta_egress < THRE2) {
+                                    r_SynSwitch.write((bit<32>)0, (bit<1>)0);
+                                }
                             }
+                            
                         }
-                        
                     }
                 }
             }

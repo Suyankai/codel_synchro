@@ -26,7 +26,7 @@
 #define THRE1 48w3000 // 3ms
 #define THRE2 48w30000 // 50ms
 #define PRIO  3w7 // Target priority
-#define PKT_LOST_INTERVAL 48w3500000 // wait till no pkt lost
+#define PKT_LOST_INTERVAL 48w3000000 // wait till no pkt lost
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
 register<bit<48>>(NO_QUEUE_ID) r_drop_time;
@@ -509,7 +509,7 @@ control egress(inout headers hdr, inout metadata meta, inout standard_metadata_t
 
                             if (time_to_last_drop > PKT_LOST_INTERVAL && meta.synchro.delta_egress < THRE2) {
                                 // leave the syn mode
-                                r_SynSwitch.write((bit<32>)0, (bit<1>)0);
+                                //r_SynSwitch.write((bit<32>)0, (bit<1>)0);
                             }
                         }
                         

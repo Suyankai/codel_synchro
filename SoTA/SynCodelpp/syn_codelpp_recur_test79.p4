@@ -26,7 +26,7 @@
 #define THRE1 48w3000 // 3ms
 #define THRE2 48w30000 // 50ms
 #define PRIO  3w7 // Target priority
-#define PKT_LOST_INTERVAL 48w3500000 // wait till no pkt lost
+#define PKT_LOST_INTERVAL 48w3000000 // wait till no pkt lost
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
 register<bit<48>>(NO_QUEUE_ID) r_drop_time;
