@@ -101,6 +101,13 @@ if __name__ == "__main__":
     fp_baseline_pih2_receive = "Baseline/pi4_Baseline_synchro_test_37_pih2.csv"
     baseline_pkt_loss_pih1, baseline_pkt_loss_pih2, baseline_df_pih1_receive, baseline_df_pih2_receive, baseline_avr_pih1_latency = latency_pktLoss(fp_baseline_pih1_send, fp_baseline_pih2_send, fp_baseline_pih1_receive, fp_baseline_pih2_receive)
     
+    fp_codel_pih1_send = "Codel/pih1_Codelpp_synchro_test_91_6.csv"
+    fp_codel_pih2_send = "Codel/pih2_Codelpp_synchro_test_91_6.csv"
+    fp_codel_pih1_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih1.csv"
+    fp_codel_pih2_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih2.csv"
+    codel_pkt_loss_pih1, codel_pkt_loss_pih2, codel_df_pih1_receive, codel_df_pih2_receive, codel_avr_pih1_latency = latency_pktLoss(fp_codel_pih1_send, fp_codel_pih2_send, fp_codel_pih1_receive, fp_codel_pih2_receive)
+    
+    
     fp_codelpp_pih1_send = "Codelpp/pih1_Codelpp_synchro_test_44_2.csv"
     fp_codelpp_pih2_send = "Codelpp/pih2_Codelpp_synchro_test_44_2.csv"
     fp_codelpp_pih1_receive = "Codelpp/pi4_Codelpp_synchro_test_44_2_pih1.csv"
@@ -138,21 +145,21 @@ if __name__ == "__main__":
     fp_inter15_pih2_receive = "inter15/pi4_SynCodelpp_synchro_test_49_4_pih2.csv"
     inter15_pkt_loss_pih1, inter15_pkt_loss_pih2, inter15_df_pih1_receive, inter15_df_pih2_receive, inter15_avr_pih1_latency = latency_pktLoss(fp_inter15_pih1_send, fp_inter15_pih2_send, fp_inter15_pih1_receive, fp_inter15_pih2_receive)
     
-    dfs = [baseline_df_pih1_receive, baseline_df_pih2_receive, codelpp_df_pih1_receive, codelpp_df_pih2_receive, inter3_df_pih1_receive, inter3_df_pih2_receive, inter5_df_pih1_receive, inter5_df_pih2_receive, inter7_df_pih1_receive, inter7_df_pih2_receive, inter10_df_pih1_receive, inter10_df_pih2_receive, inter15_df_pih1_receive, inter15_df_pih2_receive]
+    dfs = [baseline_df_pih1_receive, baseline_df_pih2_receive, codel_df_pih1_receive, codel_df_pih2_receive, codelpp_df_pih1_receive, codelpp_df_pih2_receive, inter3_df_pih1_receive, inter3_df_pih2_receive, inter5_df_pih1_receive, inter5_df_pih2_receive, inter7_df_pih1_receive, inter7_df_pih2_receive, inter10_df_pih1_receive, inter10_df_pih2_receive, inter15_df_pih1_receive, inter15_df_pih2_receive]
     
     latency_values_haptic = []
     latency_values_haptic_only = []
     latency_values_video = []
 
     # Draw the seperate haptic
-    fig, ax = plt.subplots(figsize=(14, 6))
+    fig, ax = plt.subplots(figsize=(15, 6))
     for i, df in enumerate(dfs):
         if i == 0:
             continue
         if not is_odd(i):
             latency_values_haptic_only.append(df['Latency'][df['Latency'].notna()])
         
-    haptic_only_labels = ["Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
+    haptic_only_labels = ["Codel", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
     boxplots_h = box_plot(latency_values_haptic_only, 'red', 'tan',haptic_only_labels)
     
     # Set y-axis label
@@ -160,10 +167,6 @@ if __name__ == "__main__":
     
     # Set plot title
     plt.title('Latency of Haptic Flow: THRE as Variable')
-    
-    # Add a line graph
-    # h_values = [codelpp_avr_pih1_latency, THRE3_avr_pih1_latency, THRE5_avr_pih1_latency, THRE10_avr_pih1_latency, THRE15_avr_pih1_latency]  
-    # ax.plot(h_values, marker='o', linestyle='-', color='blue', label='Line Graph')
     
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=50)) 
     plt.show()
@@ -181,9 +184,9 @@ if __name__ == "__main__":
             latency_values_haptic.append(empty_series)
     
    # Create a figure and axis object
-    fig, ax = plt.subplots(figsize=(16.5, 6))
+    fig, ax = plt.subplots(figsize=(17.5, 6))
         
-    boxplot_labels = ["                   Baseline","","                   Codelpp","","                    SynCodelpp THRE=3ms","","                    SynCodelpp THRE=5ms","","                    SynCodelpp THRE=7ms","","                    SynCodelpp THRE=10ms","","                    SynCodelpp THRE=15ms",""]
+    boxplot_labels = ["                   Baseline","","                   Codel","", "                   Codelpp","","                    SynCodelpp THRE=3ms","","                    SynCodelpp THRE=5ms","","                    SynCodelpp THRE=7ms","","                    SynCodelpp THRE=10ms","","                    SynCodelpp THRE=15ms",""]
     
     boxplots1 = box_plot(latency_values_haptic, 'red', 'tan', boxplot_labels)
     boxplots2 = box_plot(latency_values_video, 'blue', 'cyan', boxplot_labels)
@@ -202,6 +205,7 @@ if __name__ == "__main__":
     ax.axvline(x=8.5, color='gray', linestyle='--')
     ax.axvline(x=10.5, color='gray', linestyle='--')
     ax.axvline(x=12.5, color='gray', linestyle='--')
+    ax.axvline(x=14.5, color='gray', linestyle='--')
     
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=500)) 
     
@@ -211,10 +215,10 @@ if __name__ == "__main__":
     
     #pkt lost evaluation
     # Sample data
-    values = [baseline_pkt_loss_pih1, baseline_pkt_loss_pih2, codelpp_pkt_loss_pih1, codelpp_pkt_loss_pih2, inter3_pkt_loss_pih1,inter3_pkt_loss_pih2, inter5_pkt_loss_pih1,inter5_pkt_loss_pih2, inter7_pkt_loss_pih1,inter7_pkt_loss_pih2,inter10_pkt_loss_pih1,inter10_pkt_loss_pih2, inter15_pkt_loss_pih1, inter15_pkt_loss_pih2]
+    values = [baseline_pkt_loss_pih1, baseline_pkt_loss_pih2, codel_pkt_loss_pih1, codel_pkt_loss_pih2, codelpp_pkt_loss_pih1, codelpp_pkt_loss_pih2, inter3_pkt_loss_pih1,inter3_pkt_loss_pih2, inter5_pkt_loss_pih1,inter5_pkt_loss_pih2, inter7_pkt_loss_pih1,inter7_pkt_loss_pih2,inter10_pkt_loss_pih1,inter10_pkt_loss_pih2, inter15_pkt_loss_pih1, inter15_pkt_loss_pih2]
     
     # Create a Figure and Axes object
-    fig, ax = plt.subplots(figsize=(18, 6))
+    fig, ax = plt.subplots(figsize=(19, 6))
     
     # Plotting the histogram
     ax.bar(range(len(values)), values, width=0.6)
@@ -234,8 +238,9 @@ if __name__ == "__main__":
     ax.axvline(x=7.5, color='gray', linestyle='--')
     ax.axvline(x=9.5, color='gray', linestyle='--')
     ax.axvline(x=11.5, color='gray', linestyle='--')
+    ax.axvline(x=13.5, color='gray', linestyle='--')
     
-    ax.yaxis.set_major_locator(plt.MultipleLocator(base=1)) 
+    ax.yaxis.set_major_locator(plt.MultipleLocator(base=10)) 
     
     ax.grid(True)
     

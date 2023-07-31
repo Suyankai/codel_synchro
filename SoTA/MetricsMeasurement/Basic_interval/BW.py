@@ -43,6 +43,13 @@ if __name__ == "__main__":
     fp_baseline_pih2_receive = "Baseline/pi4_Baseline_synchro_test_37_pih2BW.csv"
     df_baseline_pih1_send, df_baseline_pih2_send, df_baseline_pih1_receive, df_baseline_pih2_receive= bw(fp_baseline_pih1_send, fp_baseline_pih2_send, fp_baseline_pih1_receive, fp_baseline_pih2_receive)
     
+    fp_codel_pih1_send = "Codel/pih1_Codelpp_synchro_test_91_6BW.csv"
+    fp_codel_pih2_send = "Codel/pih2_Codelpp_synchro_test_91_6BW.csv"
+    fp_codel_pih1_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih1BW.csv"
+    fp_codel_pih2_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih2BW.csv"
+    df_codel_pih1_send, df_codel_pih2_send, df_codel_pih1_receive, df_codel_pih2_receive= bw(fp_codel_pih1_send, fp_codel_pih2_send, fp_codel_pih1_receive, fp_codel_pih2_receive)
+    
+    
     fp_codelpp_pih1_send = "Codelpp/pih1_Codelpp_synchro_test_44_2BW.csv"
     fp_codelpp_pih2_send = "Codelpp/pih2_Codelpp_synchro_test_44_2BW.csv"
     fp_codelpp_pih1_receive = "Codelpp/pi4_Codelpp_synchro_test_44_2_pih1BW.csv"
@@ -80,11 +87,11 @@ if __name__ == "__main__":
     df_inter15_pih1_send, df_inter15_pih2_send, df_inter15_pih1_receive, df_inter15_pih2_receive= bw(fp_inter15_pih1_send, fp_inter15_pih2_send, fp_inter15_pih1_receive, fp_inter15_pih2_receive)
 
     #Haptic BW
-    dfs_haptic = [df_inter5_pih1_send, df_baseline_pih1_receive, df_codelpp_pih1_receive, df_inter3_pih1_receive, df_inter5_pih1_receive, df_inter7_pih1_receive, df_inter10_pih1_receive, df_inter15_pih1_receive]
+    dfs_haptic = [df_inter5_pih1_send, df_baseline_pih1_receive, df_codel_pih1_receive, df_codelpp_pih1_receive, df_inter3_pih1_receive, df_inter5_pih1_receive, df_inter7_pih1_receive, df_inter10_pih1_receive, df_inter15_pih1_receive]
     
-    fig, ax = plt.subplots(figsize=(18.5, 6))
+    fig, ax = plt.subplots(figsize=(20, 6))
         
-    labels = ["Send","Baseline", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
+    labels = ["Send","Baseline", "Codel", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
     boxplots_h = box_plot(dfs_haptic, 'red', 'tan', labels)
     
     # Set y-axis label
@@ -97,11 +104,11 @@ if __name__ == "__main__":
     plt.show()
     
     #Video BW
-    dfs_video = [df_inter5_pih2_send, df_baseline_pih2_receive, df_codelpp_pih2_receive, df_inter3_pih2_receive, df_inter5_pih2_receive, df_inter7_pih2_receive, df_inter10_pih2_receive, df_inter15_pih2_receive]
+    dfs_video = [df_inter5_pih2_send, df_baseline_pih2_receive, df_codel_pih2_receive, df_codelpp_pih2_receive, df_inter3_pih2_receive, df_inter5_pih2_receive, df_inter7_pih2_receive, df_inter10_pih2_receive, df_inter15_pih2_receive]
     
-    fig, ax = plt.subplots(figsize=(18.5, 6))
+    fig, ax = plt.subplots(figsize=(20, 6))
         
-    labels = ["Send","Baseline", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
+    labels = ["Send","Baseline","Codel","Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
     boxplots_v = box_plot(dfs_video, 'blue', 'cyan', labels)
     
     # Set y-axis label

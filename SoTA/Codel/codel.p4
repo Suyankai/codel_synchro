@@ -18,8 +18,8 @@
 #include <v1model.p4>
 
 //Codel
-#define SOJOURN_TARGET 5000 //in usec - 5ms
-#define CONTROL_INTERVAL 48w100000//in usec - 100 ms - Changes must be done here AND in commandsCodelRouter.txt
+#define SOJOURN_TARGET 500 //in usec - 0.5ms
+#define CONTROL_INTERVAL 48w10000//in usec - 10 ms - RTT
 #define INTERFACE_MTU 1500
 #define NO_QUEUE_ID 32w64
 
@@ -154,7 +154,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
     table slice_forwarding {
     	key = {
             hdr.ipv4.srcAddr              : exact;
-            hdr.ipv4.dstAddr              : lpm;
+            hdr.ipv4.dstAddr              : exact;
             
         }
         
@@ -173,7 +173,7 @@ control ingress(inout headers hdr, inout metadata meta, inout standard_metadata_
     
     table slice_priority{
     	key = {
-            hdr.ipv4.srcAddr: lpm;            
+            hdr.ipv4.srcAddr: exact;            
         }
         actions = {
             set_priority;

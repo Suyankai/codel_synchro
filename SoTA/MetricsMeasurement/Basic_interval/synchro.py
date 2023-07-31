@@ -117,6 +117,12 @@ if __name__ == "__main__":
     fp_codelpp_pih1_receive = "Codelpp/pi4_Codelpp_synchro_test_44_2_pih1.csv"
     fp_codelpp_pih2_receive = "Codelpp/pi4_Codelpp_synchro_test_44_2_pih2.csv"
     df_codelpp = synchro(fp_codelpp_pih1_send, fp_codelpp_pih2_send, fp_codelpp_pih1_receive, fp_codelpp_pih2_receive)
+    
+    fp_codel_pih1_send = "Codel/pih1_Codelpp_synchro_test_91_6.csv"
+    fp_codel_pih2_send = "Codel/pih2_Codelpp_synchro_test_91_6.csv"
+    fp_codel_pih1_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih1.csv"
+    fp_codel_pih2_receive = "Codel/pi4_Codelpp_synchro_test_91_6_pih2.csv"
+    df_codel = synchro(fp_codel_pih1_send, fp_codel_pih2_send, fp_codel_pih1_receive, fp_codel_pih2_receive)
    
     fp_inter3_pih1_send = "inter3/pih1_SynCodelpp_synchro_test_42_4.csv"
     fp_inter3_pih2_send = "inter3/pih2_SynCodelpp_synchro_test_42_4.csv"
@@ -148,11 +154,11 @@ if __name__ == "__main__":
     fp_inter15_pih2_receive = "inter15/pi4_SynCodelpp_synchro_test_49_4_pih2.csv"
     df_inter15 = synchro(fp_inter15_pih1_send, fp_inter15_pih2_send, fp_inter15_pih1_receive, fp_inter15_pih2_receive)
     
-    dfs = [df_baseline, df_codelpp, df_inter3, df_inter5, df_inter7, df_inter10, df_inter15]
+    dfs = [df_baseline, df_codel, df_codelpp, df_inter3, df_inter5, df_inter7, df_inter10, df_inter15]
     
-    fig, ax = plt.subplots(figsize=(16, 6))
+    fig, ax = plt.subplots(figsize=(18, 6))
         
-    labels = ["Baseline", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
+    labels = ["Baseline", "Codel", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
     boxplots_h = box_plot(dfs, 'red', 'tan', labels)
     
     # Set y-axis label
@@ -161,17 +167,13 @@ if __name__ == "__main__":
     # Set plot title
     plt.title('Sycnhronization Difference between Haptic & Video Flow: THRE as Variable')
     
-    # Add a line graph
-    # h_values = [codelpp_avr_pih1_latency, synPrio4_avr_pih1_latency, inter5_avr_pih1_latency, inter10_avr_pih1_latency, inter15_avr_pih1_latency]  
-    # ax.plot(h_values, marker='o', linestyle='-', color='blue', label='Line Graph')
-    
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=50)) 
     plt.show()
     
     # Zoom in of inter10 and 15
-    dfs_zoom = [df_baseline,  df_inter10, df_inter15]
-    fig, ax = plt.subplots(figsize=(7, 6))
-    labels_zoom = ["Baseline", "SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
+    dfs_zoom = [df_baseline, df_codel, df_inter10, df_inter15]
+    fig, ax = plt.subplots(figsize=(9.5, 6))
+    labels_zoom = ["Baseline", "Codel","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
     boxplots_h_zoom = box_plot(dfs_zoom, 'red', 'tan', labels_zoom)
     # Set y-axis label
     ax.set_ylabel('Sycnhronization Difference (ms)')
@@ -179,27 +181,20 @@ if __name__ == "__main__":
     # Set plot title
     plt.title('Sycnhronization Difference between Haptic & Video Flow: THRE as Variable')
     
-    # Add a line graph
-    # h_values = [codelpp_avr_pih1_latency, synPrio4_avr_pih1_latency, inter5_avr_pih1_latency, inter10_avr_pih1_latency, inter15_avr_pih1_latency]  
-    # ax.plot(h_values, marker='o', linestyle='-', color='blue', label='Line Graph')
-    
     ax.yaxis.set_major_locator(plt.MultipleLocator(base=1)) 
     plt.show()
     
-    #Zoom in of baseline
-    fig, ax = plt.subplots(figsize=(3, 6))
-    labels_baseline = ["Baseline"]
-    boxplots_baseline = box_plot(df_baseline, 'red', 'tan', labels_baseline)
-    # Set y-axis label
-    ax.set_ylabel('Sycnhronization Difference (ms)')
     
-    # Set plot title
-    plt.title('Sycnhronization Difference between Haptic & Video Flow: Baseline')
+    # #Zoom in of baseline and codel
+    # fig, ax = plt.subplots(figsize=(3, 6))
+    # labels_baseline = ["Baseline","Codel"]
+    # df_b_C = [df_baseline, df_codel]
+    # boxplots_baseline = box_plot(df_b_C, 'red', 'tan', labels_baseline)
+    # # Set y-axis label
+    # ax.set_ylabel('Sycnhronization Difference (ms)')
     
-    # Add a line graph
-    # h_values = [codelpp_avr_pih1_latency, synPrio4_avr_pih1_latency, inter5_avr_pih1_latency, inter10_avr_pih1_latency, inter15_avr_pih1_latency]  
-    # ax.plot(h_values, marker='o', linestyle='-', color='blue', label='Line Graph')
-    
-    #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.5)) 
-    plt.show()
+    # # Set plot title
+    # plt.title('Sycnhronization Difference between Haptic & Video Flow: Baseline&Codel')
+
+    # plt.show()
 

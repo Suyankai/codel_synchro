@@ -34,8 +34,9 @@ if __name__ == "__main__":
     client_cmds = []
     server_cmds = []
 
-    pih1 = "ssh pih1@10.42.0.5 'sudo tcpreplay -i eth1 --duration=20 /home/pih1/DA/TestResource/db_35_stiffness_90_sm_modified.pcapng'"  
+    pih1 = "ssh pih1@10.42.0.5 'sudo tcpreplay -i eth1 --duration=30 /home/pih1/DA/TestResource/db_35_stiffness_90_sm_modified.pcapng'"  
     pih2 = "ssh pih2@10.42.0.6 'ffmpeg -re -i /home/pih2/DA/TestResource/bigbuck_bunny_8bit_2000kbps_1080p_60.0fps_h264.mp4 -c copy -f flv udp://169.254.18.165:9001'" 
+    pih2_1 = "ssh pih2@10.42.0.6 'ffmpeg -re -i /home/pih2/DA/TestResource/bigbuck_bunny_8bit_200kbps_360p_60.0fps_h264.mp4 -c copy -f flv udp://169.254.18.165:9001'" 
 
     client_cmds.append(pih1)
     client_cmds.append(pih2)  
@@ -49,4 +50,5 @@ if __name__ == "__main__":
     for client_cmd in client_cmds:
         Popen(client_cmd, shell=True)
     
-        
+    time.sleep(12)
+    Popen(pih2_1, shell=True)
