@@ -81,7 +81,6 @@ register<bit<48>>(2000) r_h_time;
 register<bit<1>>(1)     r_SynSwitch;
 register<bit<48>>(1)    r_last_time_flag;
 
-
 // Pkt drop monitor
 register<bit<32>>(1)    r_pkt_cnt;
 register<bit<32>>(1)    r_drop_pkt_cnt;
