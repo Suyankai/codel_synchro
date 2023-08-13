@@ -91,7 +91,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(figsize=(9.5, 4))
         
     labels = ["Send","Baseline", "Codel", "Codelpp","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
-    boxplots_h = box_plot(dfs_haptic, 'black', 'darkorchid', labels)
+    boxplots_h = box_plot(dfs_haptic, 'black', 'royalblue', labels)
     
     # Set y-axis label
     ax.set_ylabel('Bandwidth (MB)')

@@ -276,7 +276,7 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(10, 6))
     # plt.figure(figsize=(10, 6))
-    sns.boxplot(x=grouped_dfs["Group"], y=grouped_dfs["Latency (ms)"], hue=grouped_dfs["Sender"],showfliers = False)
+    sns.boxplot(x=grouped_dfs["Group"], y=grouped_dfs["Latency (ms)"], hue=grouped_dfs["Sender"],showfliers = False,palette="colorblind")
 
     ax.axvline(x=2.5, color='black', linestyle='-', linewidth=1)
     plt.yscale("log")
