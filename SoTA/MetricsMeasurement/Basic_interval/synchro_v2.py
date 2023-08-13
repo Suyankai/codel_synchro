@@ -91,16 +91,19 @@ def synchro(fp_pih1_send, fp_pih2_send, fp_pih1_receive, fp_pih2_receive):
             df_pair_receive['Synchro_receive'][i] = df_pair_receive['Synchro_receive'][i].total_seconds() * 1000
             
             #log
-            df_pair_receive['Synchro_receive'][i] = np.log(df_pair_receive['Synchro_receive'][i])
+            #df_pair_receive['Synchro_receive'][i] = np.log(df_pair_receive['Synchro_receive'][i])
+            df_pair_receive['Synchro_receive'][i] = df_pair_receive['Synchro_receive'][i]
             
     return df_pair_receive['Synchro_receive'][df_pair_receive['Synchro_receive'].notna()]
 
 def box_plot(data, edge_color, fill_color, labels):
-    bp = ax.boxplot(data, patch_artist=True, vert=False, showfliers=False, labels=labels)
+    bp = ax.boxplot(data, patch_artist=True, vert=True, showfliers=False, labels=labels)
+    #bp = ax.boxplot(data, patch_artist=True, vert=False, showfliers=False, labels=labels)
     
     #ax.grid(True)
     
-    for element in ['boxes', 'whiskers', 'fliers', 'means', 'medians', 'caps']:
+    #for element in ['boxes', 'whiskers', 'fliers', 'means', 'medians', 'caps']:
+    for element in ['boxes', 'whiskers', 'fliers', 'means', 'caps']:
         plt.setp(bp[element], color=edge_color)
 
     for patch in bp['boxes']:
@@ -158,36 +161,24 @@ if __name__ == "__main__":
     df_inter15 = synchro(fp_inter15_pih1_send, fp_inter15_pih2_send, fp_inter15_pih1_receive, fp_inter15_pih2_receive)
     
     # All the synchro
-    # dfs = [df_baseline, df_codel, df_codelpp, df_inter3, df_inter5, df_inter7, df_inter10, df_inter15]
-    dfs = [df_inter15, df_inter10, df_inter7, df_inter5, df_inter3, df_codelpp, df_codel,df_baseline]
+    dfs = [df_baseline, df_codel, df_codelpp, df_inter3, df_inter5, df_inter7, df_inter10, df_inter15]
     
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 6))
         
-    #labels = ["Baseline", "Codel", "Codelpp","SynCodelpp THRE=3ms","SynCodelpp THRE=5ms","SynCodelpp THRE=7ms","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
-    labels = ["SynCodelpp THRE=15ms", "SynCodelpp THRE=10ms", "SynCodelpp THRE=7ms", "SynCodelpp THRE=5ms", "SynCodelpp THRE=3ms", "Codelpp", "Codel", "Baseline"]
-    boxplots_h = box_plot(dfs, 'red', 'tan', labels)
+    labels = ["Baseline", "Codel", "Codelpp","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
+    boxplots_h = box_plot(dfs, 'black', 'lightblue', labels)
+    
     
     # Set y-axis label
     ax.set_ylabel('Sycnhronization Difference (ms)')
+    plt.yscale("log")  
     
     # Set plot title
-    plt.title('Sycnhronization Difference between Haptic & Video Flow: THRE as Variable')
+    #plt.title('Sycnhronization Difference between Haptic & Video Flow: THRE as Variable')
     
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=50)) 
+    ax.axvline(x=3.5, color='black', linestyle='-', linewidth=1)
     plt.show()
     
-    # # Zoom in of inter10 and 15 
-    # dfs_zoom = [df_baseline, df_codel, df_inter10, df_inter15]
-    # fig, ax = plt.subplots(figsize=(9.5, 6))
-    # labels_zoom = ["Baseline", "Codel","SynCodelpp THRE=10ms","SynCodelpp THRE=15ms"]
-    # boxplots_h_zoom = box_plot(dfs_zoom, 'red', 'tan', labels_zoom)
-    # # Set y-axis label
-    # ax.set_ylabel('Sycnhronization Difference (ms)')
-    
-    # # Set plot title
-    # plt.title('Sycnhronization Difference between Haptic & Video Flow: THRE as Variable')
-    
-    # #ax.yaxis.set_major_locator(plt.MultipleLocator(base=1)) 
-    # plt.show()
     
     
