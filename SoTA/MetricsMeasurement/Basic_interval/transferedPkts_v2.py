@@ -19,7 +19,7 @@ ax.bar(range(len(values)), values, width=0.5, color='dimgrey')
 
 # Adding labels and title
 ax.set_ylabel('Prioritizied Percentage (%)')
-ax.set_title('Percentage of Prioritized Video Packets: THRE as Variable')
+#ax.set_title('Percentage of Prioritized Video Packets: THRE as Variable')
 
 # Customizing x-axis tick labels
 ax.set_xticks(range(len(values)))

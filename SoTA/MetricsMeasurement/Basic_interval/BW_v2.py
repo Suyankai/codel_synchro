@@ -90,11 +90,11 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(9.5, 4))
         
-    labels = ["Send","Baseline", "Codel", "Codelpp","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
+    labels = ["Send","Baseline", "CoDel", "CoDel++","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
     boxplots_h = box_plot(dfs_haptic, 'black', 'royalblue', labels)
     
     # Set y-axis label
-    ax.set_ylabel('Bandwidth (MB)')
+    ax.set_ylabel('Throughput (Mbps)')
     
     # Set plot title
 
@@ -103,19 +103,24 @@ if __name__ == "__main__":
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.025)) 
     plt.show()
     
+    whiskers_haptic = [item.get_ydata()[1] for item in boxplots_h['whiskers']]
+    medians_haptic = [item.get_ydata()[1] for item in boxplots_h['medians']]
+    
     #Video BW
     dfs_video = [df_inter5_pih2_send, df_baseline_pih2_receive, df_codel_pih2_receive, df_codelpp_pih2_receive, df_inter3_pih2_receive, df_inter5_pih2_receive, df_inter7_pih2_receive, df_inter10_pih2_receive, df_inter15_pih2_receive]
     
     fig, ax = plt.subplots(figsize=(9.5, 4))
         
-    labels = ["Send","Baseline","Codel","Codelpp","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
+    labels = ["Send","Baseline","CoDel","CoDel++","THRE=3ms","THRE=5ms","THRE=7ms","THRE=10ms","THRE=15ms"]
     boxplots_v = box_plot(dfs_video, 'black', 'goldenrod', labels)
     
     # Set y-axis label
-    ax.set_ylabel('Bandwidth (MB)')
+    ax.set_ylabel('Throughput (Mbps)')
     ax.axvline(x=4.5, color='black', linestyle='-', linewidth=1)
     # Set plot title
 
 
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.25)) 
     plt.show()
+    whiskers_video = [item.get_ydata()[1] for item in boxplots_v['whiskers']]
+    medians_video = [item.get_ydata()[1] for item in boxplots_v['medians']]

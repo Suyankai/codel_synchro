@@ -187,9 +187,14 @@ if __name__ == "__main__":
     ax.axvline(x=14.5, color='gray', linestyle='--')
     
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=500)) 
+    whiskers_haptic = [item.get_ydata()[1] for item in boxplots1['whiskers']]
+    medians_haptic = [item.get_ydata()[1] for item in boxplots1['medians']]
+    
+    whiskers_video = [item.get_ydata()[1] for item in boxplots2['whiskers']]
+    medians_video = [item.get_ydata()[1] for item in boxplots2['medians']]
     
     # Display the plot
-    plt.yscale("log")
+    #plt.yscale("log")
     plt.xticks([]) 
     plt.show()
     
@@ -211,19 +216,19 @@ if __name__ == "__main__":
                latency.append(df["Latency"][j])
                sender.append("Video") 
            elif i == 2:
-               group.append("Codel")
+               group.append("CoDel")
                latency.append(df["Latency"][j])
                sender.append("Haptic") 
            elif i == 3:
-               group.append("Codel")
+               group.append("CoDel")
                latency.append(df["Latency"][j])
                sender.append("Video") 
            elif i == 4:
-               group.append("Codelpp")
+               group.append("CoDel++")
                latency.append(df["Latency"][j])
                sender.append("Haptic") 
            elif i == 5:
-               group.append("Codelpp")
+               group.append("CoDel++")
                latency.append(df["Latency"][j])
                sender.append("Video") 
            elif i == 6:
@@ -334,19 +339,19 @@ if __name__ == "__main__":
             pkt_lost.append(values[i])
             sender.append("Video") 
         elif i == 2:
-            group.append("Codel")
+            group.append("CoDel")
             pkt_lost.append(values[i])
             sender.append("Haptic") 
         elif i == 3:
-            group.append("Codel")
+            group.append("CoDel")
             pkt_lost.append(values[i])
             sender.append("Video") 
         elif i == 4:
-            group.append("Codelpp")
+            group.append("CoDel++")
             pkt_lost.append(values[i])
             sender.append("Haptic") 
         elif i == 5:
-            group.append("Codelpp")
+            group.append("CoDel++")
             pkt_lost.append(values[i])
             sender.append("Video") 
         elif i == 6:

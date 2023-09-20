@@ -158,7 +158,7 @@ if __name__ == "__main__":
     
     fig, ax = plt.subplots(figsize=(6, 4))
         
-    labels = ["Baseline", "Codel", "Codelpp","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
+    labels = ["Baseline", "CoDel", "CoDel++","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
     boxplots_h = box_plot(dfs, 'black', 'lightblue', labels)
     
     
@@ -172,3 +172,5 @@ if __name__ == "__main__":
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=50)) 
     ax.axvline(x=3.5, color='black', linestyle='-', linewidth=1)
     plt.show()
+    whiskers = [item.get_ydata()[1] for item in boxplots_h['whiskers']]
+    medians = [item.get_ydata()[1] for item in boxplots_h['medians']]

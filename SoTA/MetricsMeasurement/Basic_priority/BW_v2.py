@@ -82,13 +82,13 @@ if __name__ == "__main__":
     #Haptic BW
     dfs_haptic = [df_synPrio5_pih1_send, df_baseline_pih1_receive, df_codel_pih1_receive, df_codelpp_pih1_receive, df_synPrio4_pih1_receive, df_synPrio5_pih1_receive, df_synPrio6_pih1_receive, df_synPrio7_pih1_receive]
     
-    fig, ax = plt.subplots(figsize=(9, 6))
+    fig, ax = plt.subplots(figsize=(9.5, 4))
         
-    labels = ["Send","Baseline", "Codel","Codelpp","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
+    labels = ["Send","Baseline", "CoDel","CoDel++","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
     boxplots_h = box_plot(dfs_haptic, 'black', 'royalblue', labels)
     
     # Set y-axis label
-    ax.set_ylabel('Bandwidth (MB)')
+    ax.set_ylabel('Throughput (Mbps)')
     
     # Set plot title
 
@@ -97,19 +97,24 @@ if __name__ == "__main__":
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.025)) 
     plt.show()
     
+    whiskers_haptic = [item.get_ydata()[1] for item in boxplots_h['whiskers']]
+    medians_haptic = [item.get_ydata()[1] for item in boxplots_h['medians']]
+    
     #Video BW
     dfs_video = [df_synPrio5_pih2_send, df_baseline_pih2_receive, df_codel_pih2_receive,df_codelpp_pih2_receive, df_synPrio4_pih2_receive, df_synPrio5_pih2_receive, df_synPrio6_pih2_receive, df_synPrio7_pih2_receive]
     
-    fig, ax = plt.subplots(figsize=(9, 6))
+    fig, ax = plt.subplots(figsize=(9.5, 4))
         
-    labels = ["Send","Baseline", "Codel","Codelpp","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
+    labels = ["Send","Baseline", "CoDel","CoDel++","PRIO=4","PRIO=5","PRIO=6","PRIO=7"]
     boxplots_v = box_plot(dfs_video, 'black', 'goldenrod', labels)
     
     # Set y-axis label
-    ax.set_ylabel('Bandwidth (MB)')
+    ax.set_ylabel('Throughput (Mbps)')
     ax.axvline(x=4.5, color='black', linestyle='-', linewidth=1)
     # Set plot title
 
 
     #ax.yaxis.set_major_locator(plt.MultipleLocator(base=0.25)) 
     plt.show()
+    whiskers_video = [item.get_ydata()[1] for item in boxplots_v['whiskers']]
+    medians_video = [item.get_ydata()[1] for item in boxplots_v['medians']]

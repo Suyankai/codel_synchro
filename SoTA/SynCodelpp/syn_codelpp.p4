@@ -25,6 +25,7 @@
 
 #define THRE1 48w15000 // 1ms
 #define THRE2 48w1000 // 1ms
+#define PRIO  3w7 // Target priority
 
 register<bit<32>>(NO_QUEUE_ID) r_drop_count;
 register<bit<48>>(NO_QUEUE_ID) r_drop_time;

@@ -207,7 +207,7 @@ if __name__ == "__main__":
     ax.axvline(x=12.5, color='gray', linestyle='--')
     ax.axvline(x=14.5, color='gray', linestyle='--')
     
-    ax.yaxis.set_major_locator(plt.MultipleLocator(base=500)) 
+    ax.yaxis.set_major_locator(plt.MultipleLocator(base=200)) 
     
     # Display the plot
     plt.show()
